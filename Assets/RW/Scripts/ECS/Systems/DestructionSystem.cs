@@ -28,8 +28,8 @@ public class DestructionSystem : ComponentSystem
             if (math.distance(enemyPos.Value, playerPosition) <= thresholdDistance)
             {
                 FXManager.Instance.CreateExplosion(enemyPos.Value);
-                FXManager.Instance.CreateExplosion(playerPosition);
-                GameManager.EndGame();
+                //FXManager.Instance.CreateExplosion(playerPosition);
+                //GameManager.EndGame();
 
                 // Remove the Entity. This is an Entity Command Buffer that waits for a safe time to remove any Entities or data
                 PostUpdateCommands.DestroyEntity(enemy);
