@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Mathematics;
+using Unity.Transforms;
+using Unity.Rendering;
 using Unity.Entities;
 
 using Random = UnityEngine.Random;
@@ -35,15 +37,37 @@ public class EnemySpawner : MonoBehaviour
     // flag from GameManager to enable spawning
     private bool canSpawn;
 
+    //the one and only manager
     private EntityManager entityManager;
 
+    // enemy mesh and materials
+    [SerializeField] private Mesh enemyMesh;
+    [SerializeField] private Material enemyMaterial;
 
 
     private void Start()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        Entity entity = entityManager.CreateEntity();
+        // associate data types together
+        EntityArchetype archetype = entityManager.CreateArchetype(
+            typeof(Translation),
+            typeof(Rotation),
+            typeof(RenderMesh),
+            typeof(RenderBounds),
+            typeof(LocalToWorld));
+
+        // pass the archetype for initialization
+        Entity entity = entityManager.CreateEntity(archetype);
+
+        // add data and specific values
+        entityManager.AddComponentData(entity, new Translation { Value = new float3(-3f, 0.5f, 5f) });
+        entityManager.AddComponentData(entity, new Rotation { Value = quaternion.EulerXYZ(new float3(0f, 45f, 0f)) });
+        entityManager.AddSharedComponentData(entity, new RenderMesh
+        {
+            mesh = enemyMesh,
+            material = enemyMaterial
+        });
     }
 
     // spawns enemies in a ring around the player
