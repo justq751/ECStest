@@ -186,11 +186,6 @@ MonoBehaviour:
   difficultyBonus: 5
   minSpeed: 4
   maxSpeed: 12
-  enemyMesh: {fileID: -221378421155460432, guid: bd2b0ac97d70b8a4fa5c3b735f0c6b0a,
-    type: 3}
-  enemyMaterial: {fileID: 2100000, guid: 4b792b1a9e5f4d7408a47683c868a53a, type: 2}
-  enemyPrefab: {fileID: 8672307886139396931, guid: 264bc8d7b5dc3444cbc61d547ebb6432,
-    type: 3}
 --- !u!4 &1786001292
 Transform:
   m_ObjectHideFlags: 0
@@ -439,7 +434,7 @@ PrefabInstance:
     - target: {fileID: 7319728304887110948, guid: 41e8308a9678ee24b8162326c24af540,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7319728304887110955, guid: 41e8308a9678ee24b8162326c24af540,
         type: 3}
@@ -540,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 6892269689495069278, guid: 2ac3e2c1569c4d247b82208ba7ffe178,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753705179663125290, guid: 2ac3e2c1569c4d247b82208ba7ffe178,
         type: 3}
