@@ -48,26 +48,6 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-        // associate data types together
-        EntityArchetype archetype = entityManager.CreateArchetype(
-            typeof(Translation),
-            typeof(Rotation),
-            typeof(RenderMesh),
-            typeof(RenderBounds),
-            typeof(LocalToWorld));
-
-        // pass the archetype for initialization
-        Entity entity = entityManager.CreateEntity(archetype);
-
-        // add data and specific values
-        entityManager.AddComponentData(entity, new Translation { Value = new float3(-3f, 0.5f, 5f) });
-        entityManager.AddComponentData(entity, new Rotation { Value = quaternion.EulerXYZ(new float3(0f, 45f, 0f)) });
-        entityManager.AddSharedComponentData(entity, new RenderMesh
-        {
-            mesh = enemyMesh,
-            material = enemyMaterial
-        });
     }
 
     // spawns enemies in a ring around the player
