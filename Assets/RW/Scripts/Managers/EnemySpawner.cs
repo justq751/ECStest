@@ -44,10 +44,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Mesh enemyMesh;
     [SerializeField] private Material enemyMaterial;
 
+    [SerializeField] private GameObject enemyPrefab;
+    private Entity enemyEntityPrefab;
 
     private void Start()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
+        enemyEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, settings);
+        entityManager.Instantiate(enemyEntityPrefab);
+        //SpawnWave();
     }
 
     // spawns enemies in a ring around the player
