@@ -3,8 +3,10 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Rendering;
 using Unity.Entities;
+using Unity.Collections;
 
 using Random = UnityEngine.Random;
+using System;
 
 
 /// <summary>
@@ -53,14 +55,29 @@ public class EnemySpawner : MonoBehaviour
 
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
         enemyEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, settings);
-        entityManager.Instantiate(enemyEntityPrefab);
-        //SpawnWave();
+        //entityManager.Instantiate(enemyEntityPrefab);
+        SpawnWave();
     }
 
     // spawns enemies in a ring around the player
     private void SpawnWave()
     {
+        // Declare a new NativeArray, with up to the spawnCount elements. 
+        // Allocator.Temp indicates the NativeArray won’t need to persist once the setup is complete
+        NativeArray<Entity> enemyArray = new NativeArray<Entity>(spawnCount, Allocator.Temp);
 
+        // Each iteration instantiates an Entity and stores it in enemyArray
+        for (int i = 0; i < enemyArray.Length; i++)
+        {
+            enemyArray[i] = entityManager.Instantiate(enemyEntityPrefab);
+            // find a 3D position
+            entityManager.SetComponentData(enemyArray[i], new Translation { Value = RandomPointOnCircle(spawnRadius) });
+            entityManager.SetComponentData(enemyArray[i], new MoveForward { speed = Random.Range(minSpeed, maxSpeed) });
+        }
+        // frees any temporarily allocated memory
+        enemyArray.Dispose();
+        // increment the spawnCount on each wave to make the game progressively harder
+        spawnCount += difficultyBonus;
     }
 
     // get a random point on a circle with given radius
