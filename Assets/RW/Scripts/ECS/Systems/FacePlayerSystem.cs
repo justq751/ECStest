@@ -16,7 +16,7 @@ public class FacePlayerSystem : ComponentSystem
         // store the player’s location
         float3 playerPos = (float3)GameManager.GetPlayerPosition();
         //loop through all Entities
-        Entities.ForEach((Entity entity, ref Translation trans, ref Rotation rot) =>
+        Entities.WithAll<EnemyTag>().ForEach((Entity entity, ref Translation trans, ref Rotation rot) =>
         {
             // calculate the vector to the player
             float3 direction = playerPos - trans.Value;
